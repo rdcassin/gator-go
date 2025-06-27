@@ -1,0 +1,19 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, generated with go test -c
+*.test
+
+# Output of the go profiler, generated with go test -cpuprofile or go run -cpuprofile
+*.prof
+
+# Editor and IDE specific files
+.idea/
+.vscode/
+.DS_Store
+
+# Configuration file
+.gatorconfig.json
