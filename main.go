@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+
 	"github.com/rdcassin/gator-go/internal/config"
 )
 
@@ -19,7 +20,7 @@ func main() {
 
 	cfg, err = config.Read()
 	if err != nil {
-		log.Fatal("Error starting program: %v", err)
+		log.Fatalf("Error starting program: %v", err)
 	}
 	fmt.Println(cfg)
 }
