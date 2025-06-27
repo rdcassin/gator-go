@@ -41,7 +41,11 @@ func main() {
 	// Adding Register Command
 	cmdName = "register"
 	cmds.register(cmdName, handlerRegister)
-		
+	
+	// Adding ListUsers Command
+	cmdName = "users"
+	cmds.register(cmdName, handlerListUsers)
+
 	// Adding Reset Command
 	cmdName = "reset"
 	cmds.register(cmdName, handlerReset)
