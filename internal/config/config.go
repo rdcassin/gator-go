@@ -40,7 +40,7 @@ func (c *Config) SetUser(username string) error {
 	c.CurrentUsername = username
 	err := write(*c)
 	if err != nil {
-		return fmt.Errorf("error setting username to %s", username)
+		return err
 	}
 
 	return nil
@@ -59,12 +59,12 @@ func getConfigFilePath() (string, error) {
 func write(cfg Config) error {
 	filePath, err := getConfigFilePath()
 	if err != nil {
-		return fmt.Errorf("error fetching configuration filepath: %w", err)
+		return err
 	}
 
 	rawCfg := Config{
-		DBURL: 				cfg.DBURL,
-		CurrentUsername:	cfg.CurrentUsername,
+		DBURL:           cfg.DBURL,
+		CurrentUsername: cfg.CurrentUsername,
 	}
 
 	file, err := os.Create(filePath)
