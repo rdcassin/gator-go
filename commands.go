@@ -13,6 +13,10 @@ type commands struct {
 	registeredCommands map[string]func(*state, command) error
 }
 
+func (c *commands) register(name string, f func(*state, command) error) {
+	c.registeredCommands[name] = f
+}
+
 func (c *commands) run(s *state, cmd command) error {
 	if s.cfg == nil {
 		return fmt.Errorf("configuration invalid... can't run command")
@@ -24,15 +28,4 @@ func (c *commands) run(s *state, cmd command) error {
 	}
 
 	return chosenCommand(s, cmd)
-}
-
-func (c *commands) register(name string, f func(*state, command) error) error {
-	_, exists := c.registeredCommands[name]
-	if exists {
-		return fmt.Errorf("command already exists... cannot add command")
-	}
-
-	c.registeredCommands[name] = f
-
-	return nil
 }
