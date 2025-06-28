@@ -54,6 +54,18 @@ func main() {
 	cmdName = "addfeed"
 	cmds.register(cmdName, handlerAddFeed)
 
+	// Adding ListFeeds Command
+	cmdName = "feeds"
+	cmds.register(cmdName, handlerListFeeds)
+
+	// Adding Follow Command
+	cmdName = "follow"
+	cmds.register(cmdName, handlerFollow)
+
+	// Adding ListFeedFollows Command
+	cmdName = "following"
+	cmds.register(cmdName, handlerListFeedFollows)
+
 	// Adding Reset Command
 	cmdName = "reset"
 	cmds.register(cmdName, handlerReset)
@@ -70,7 +82,7 @@ func main() {
 	// Running command inputed
 	err = cmds.run(&runState, cmd)
 	if err != nil {
-		log.Fatalf("error running command %s: %s", cmd.Name, err)
+		log.Fatalf("error running command <%s>: %s", cmd.Name, err)
 	}
 	
 }
