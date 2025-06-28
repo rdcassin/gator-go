@@ -46,6 +46,10 @@ func main() {
 	cmdName = "users"
 	cmds.register(cmdName, handlerListUsers)
 
+	// Adding Aggregate Command
+	cmdName = "agg"
+	cmds.register(cmdName, handlerAggregate)
+
 	// Adding Reset Command
 	cmdName = "reset"
 	cmds.register(cmdName, handlerReset)
