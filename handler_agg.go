@@ -19,7 +19,7 @@ func handlerAggregate(s *state, cmd command) error {
 		return err
 	}
 
-	fmt.Println(*feed)
+	fmt.Printf("Feed: %+v\n", *feed)
 
 	return nil
 }

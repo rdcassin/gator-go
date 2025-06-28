@@ -50,6 +50,10 @@ func main() {
 	cmdName = "agg"
 	cmds.register(cmdName, handlerAggregate)
 
+	// Adding AddFeed Command
+	cmdName = "addfeed"
+	cmds.register(cmdName, handlerAddFeed)
+
 	// Adding Reset Command
 	cmdName = "reset"
 	cmds.register(cmdName, handlerReset)

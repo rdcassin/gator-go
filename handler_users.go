@@ -53,10 +53,10 @@ func handlerRegister(s *state, cmd command) error {
 
 	// Creating new user
 	newUserParams := database.CreateUserParams{
-		ID: uuid.New(),
+		ID:        uuid.New(),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
-		Name: username,
+		Name:      username,
 	}
 	newUser, err := s.db.CreateUser(context.Background(), newUserParams)
 	if err != nil {
@@ -83,7 +83,7 @@ func handlerListUsers(s *state, cmd command) error {
 	}
 
 	currentUser := s.cfg.CurrentUsername
-	
+
 	for _, user := range users {
 		currentTag := "(current)"
 		if user.Name != currentUser {
