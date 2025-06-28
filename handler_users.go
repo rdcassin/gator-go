@@ -13,7 +13,7 @@ import (
 
 func handlerLogin(s *state, cmd command) error {
 	if len(cmd.Args) != 1 {
-		return fmt.Errorf("usage: %s <Username>", cmd.Name)
+		return fmt.Errorf("usage: <%s> <Username>", cmd.Name)
 	}
 
 	username := cmd.Args[0]
@@ -37,7 +37,7 @@ func handlerLogin(s *state, cmd command) error {
 
 func handlerRegister(s *state, cmd command) error {
 	if len(cmd.Args) != 1 {
-		return fmt.Errorf("usage: %s <Username>", cmd.Name)
+		return fmt.Errorf("usage: <%s> <Username>", cmd.Name)
 	}
 
 	username := cmd.Args[0]
@@ -54,8 +54,8 @@ func handlerRegister(s *state, cmd command) error {
 	// Creating new user
 	newUserParams := database.CreateUserParams{
 		ID:        uuid.New(),
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt: time.Now().UTC(),
+		UpdatedAt: time.Now().UTC(),
 		Name:      username,
 	}
 	newUser, err := s.db.CreateUser(context.Background(), newUserParams)
@@ -74,7 +74,7 @@ func handlerRegister(s *state, cmd command) error {
 
 func handlerListUsers(s *state, cmd command) error {
 	if len(cmd.Args) != 0 {
-		return fmt.Errorf("usage: %s", cmd.Name)
+		return fmt.Errorf("usage: <%s>", cmd.Name)
 	}
 
 	users, err := s.db.GetUsers(context.Background())
