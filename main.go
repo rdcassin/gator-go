@@ -44,7 +44,7 @@ func main() {
 	
 	// Adding ListUsers Command
 	cmdName = "users"
-	cmds.register(cmdName, handlerListUsers)
+	cmds.register(cmdName, middlewareLoggedIn(handlerListUsers))
 
 	// Adding Aggregate Command
 	cmdName = "agg"
@@ -52,7 +52,7 @@ func main() {
 
 	// Adding AddFeed Command
 	cmdName = "addfeed"
-	cmds.register(cmdName, handlerAddFeed)
+	cmds.register(cmdName, middlewareLoggedIn(handlerAddFeed))
 
 	// Adding ListFeeds Command
 	cmdName = "feeds"
@@ -60,11 +60,15 @@ func main() {
 
 	// Adding Follow Command
 	cmdName = "follow"
-	cmds.register(cmdName, handlerFollow)
+	cmds.register(cmdName, middlewareLoggedIn(handlerFollow))
 
 	// Adding ListFeedFollows Command
 	cmdName = "following"
-	cmds.register(cmdName, handlerListFeedFollows)
+	cmds.register(cmdName, middlewareLoggedIn(handlerListFeedFollows))
+
+	// Adding Unfollow Command
+	cmdName = "unfollow"
+	cmds.register(cmdName, middlewareLoggedIn(handlerUnfollow))
 
 	// Adding Reset Command
 	cmdName = "reset"

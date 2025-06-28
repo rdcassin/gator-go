@@ -9,7 +9,35 @@ import (
 	"github.com/rdcassin/gator-go/internal/database"
 )
 
-func handlerListFeedFollows(s *state, cmd command) error {
+func handlerUnfollow(s *state, cmd command, user database.User) error {
+	if len(cmd.Args) != 1 {
+		return fmt.Errorf("usage: %s <FeedURL>", cmd.Name)
+	}
+
+	userID := user.ID
+	feedURL := cmd.Args[0]
+	feed, err := s.db.GetFeedByURL(context.Background(), feedURL)
+	if err != nil {
+		return fmt.Errorf("error fetching feed info: %w", err)
+	}
+	feedID := feed.ID
+
+	deleteFeedFollow := database.DeleteFeedFollowParams {
+		UserID: userID,
+		FeedID: feedID,
+	}
+
+	err = s.db.DeleteFeedFollow(context.Background(), deleteFeedFollow)
+	if err != nil {
+		return fmt.Errorf("error deleting follow: %w", err)
+	}
+
+	username := user.Name
+	fmt.Printf("%s is no longer following %s", username, feedURL)
+	return nil
+}
+
+func handlerListFeedFollows(s *state, cmd command, user database.User) error {
 	if len(cmd.Args) > 1 {
 		return fmt.Errorf("usage: <%s> [-v]", cmd.Name)
 	}
@@ -25,23 +53,18 @@ func handlerListFeedFollows(s *state, cmd command) error {
 		verbose = true
 	}
 
-	username := s.cfg.CurrentUsername
-	user, err := s.db.GetUser(context.Background(), username)
-	if err != nil {
-		return fmt.Errorf("error fetching feed: %w", err)
-	}
 	userID := user.ID
 
 	feeds, err := s.db.GetFeedFollowsForUser(context.Background(), userID)
 	if err != nil {
-		return fmt.Errorf("error fetching feeds for %s", err)
+		return fmt.Errorf("error fetching feeds for %w", err)
 	}
 
 	printResults(feeds, verbose)
 	return nil
 }
 
-func handlerFollow(s *state, cmd command) error {
+func handlerFollow(s *state, cmd command, user database.User) error {
 	if len(cmd.Args) != 1 {
 		return fmt.Errorf("usage: %s <FeedURL>", cmd.Name)
 	}
@@ -52,11 +75,7 @@ func handlerFollow(s *state, cmd command) error {
 		return fmt.Errorf("error fetching feed: %w", err)
 	}
 	feedID := feed.ID
-	username := s.cfg.CurrentUsername
-	user, err := s.db.GetUser(context.Background(), username)
-	if err != nil {
-		return fmt.Errorf("error fetching user info: %w", err)
-	}
+	username := user.Name
 	userID := user.ID
 
 	newFeedFollow := database.CreateFeedFollowParams{

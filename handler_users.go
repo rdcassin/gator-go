@@ -72,7 +72,7 @@ func handlerRegister(s *state, cmd command) error {
 	return nil
 }
 
-func handlerListUsers(s *state, cmd command) error {
+func handlerListUsers(s *state, cmd command, user database.User) error {
 	if len(cmd.Args) != 0 {
 		return fmt.Errorf("usage: <%s>", cmd.Name)
 	}
@@ -82,11 +82,11 @@ func handlerListUsers(s *state, cmd command) error {
 		return fmt.Errorf("error fetching all users: %s", err)
 	}
 
-	currentUser := s.cfg.CurrentUsername
+	currentUsername := user.Name
 
 	for _, user := range users {
 		currentTag := "(current)"
-		if user.Name != currentUser {
+		if user.Name != currentUsername {
 			currentTag = ""
 		}
 		fmt.Println(user.Name, currentTag)
