@@ -70,6 +70,10 @@ func main() {
 	cmdName = "unfollow"
 	cmds.register(cmdName, middlewareLoggedIn(handlerUnfollow))
 
+	// Adding Browse Command
+	cmdName = "browse"
+	cmds.register(cmdName, middlewareLoggedIn(handlerBrowse))
+
 	// Adding Reset Command
 	cmdName = "reset"
 	cmds.register(cmdName, handlerReset)

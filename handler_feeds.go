@@ -62,6 +62,6 @@ func handlerAddFeed(s *state, cmd command, user database.User) error {
 	}
 
 	printResults([]database.Feed{feed}, true)
-	fmt.Printf("%s feed was added to the database and %s is now following this feed", feed.Name, username)
+	fmt.Printf("%s feed was added to the database and %s is now following this feed\n", feed.Name, username)
 	return nil
 }
