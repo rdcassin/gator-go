@@ -5,11 +5,10 @@ import (
 	"reflect"
 
 	"github.com/rdcassin/gator-go/internal/database"
-	"github.com/rdcassin/gator-go/internal/rss"
 )
 
 type dataItems interface {
-	database.Feed | database.GetFeedsRow | database.CreateFeedFollowRow | database.GetFeedFollowsForUserRow | rss.RSSItem
+	database.Feed | database.GetFeedsRow | database.CreateFeedFollowRow | database.GetFeedFollowsForUserRow
 }
 
 func printResults[T dataItems](items []T, verbose bool) {
@@ -27,7 +26,7 @@ func printAllFields(item interface{}) {
     t := reflect.TypeOf(item)
     
     // Define field order for consistent output
-    fieldOrder := []string{"ID", "CreatedAt", "UpdatedAt", "Url", "Name", "UserID", "FeedID", "FeedName", "UserName", "Title", "Link", "Description", "PubDate"}
+    fieldOrder := []string{"ID", "CreatedAt", "UpdatedAt", "Url", "Name", "UserID", "FeedID", "FeedName", "UserName"}
     
     // Print fields in order if they exist
     for _, fieldName := range fieldOrder {
@@ -53,8 +52,6 @@ func printCustom(item interface{}) {
         fmt.Printf("* %-4s %s\n", "Feed:", v.FeedName)
     case database.GetFeedFollowsForUserRow:
         fmt.Printf("* %-4s %s\n", "Feed:", v.FeedName)
-    case rss.RSSItem:
-        fmt.Printf("* %-4s %s\n", "Title:", v.Title)
     default:
         fmt.Printf("Unknown type: %T\n", v)
     }
